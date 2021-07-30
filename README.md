@@ -1,7 +1,7 @@
-# JsonPowerDB
+# JsonPowerDB Powerfull PowerIndeX
 
-**login2explore** click to more information about JSONPowerDB  [click here](http://login2explore.com/jpdb/docs.html)
+**login2explore** click to more information about JsonPowerDB  [click here](http://login2explore.com)
 
-**Documentation** click to more information about JSONPowerDB API [Click to more information  ](http://login2explore.com/jpdb/docs.html)
+**Documentation** click to more information about JsonPowerDB API [Click here](http://login2explore.com/jpdb/docs.html)
 
-### CRUD Operation
+### Basic crud operation of JsonPowerDB 
