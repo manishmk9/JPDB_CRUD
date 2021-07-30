@@ -24,6 +24,7 @@
 
 ### Screenshots:
 
-![Dashboard](https://github.com/manishmk9/JPDB_CRUD/blob/master/Dashboard.JPG?raw=true)
+![Dashboard](https://github.com/manishmk9/JPDB_CRUD/blob/master/Dashboard.jpg?raw=true)
+![Dashboard](https://github.com/manishmk9/JPDB_CRUD/blob/master/Dashboard.JPG?)
 
 ### Basic crud operation of JsonPowerDB 
