@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this tuserlate file, choose Tools | Tuserlates
+and open the tuserlate in the editor.
+-->
+<html lang="en"> 
+    <head> 
+        <title>Bootstrap Example</title> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <link rel="stylesheet" 
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+        <script 
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+        <script 
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+        <script 
+        src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+    </head> 
+    <body> 
+        <div class="container">
+            <span><label>Request</label></span>
+            <textarea readonly id="put" rows="5" cols="155">
+            </textarea>
+            <br>
+            <span><label>Response</label></span>
+            <textarea readonly id="show" rows="5" cols="155">
+            </textarea>
+            <h2>Vertical (basic) form</h2>
+            <form id="userForm" method="post"> 
+                <div class="form-group"> 
+                    <span><label for="userId">User ID:</label> <label id="userIdMsg"> 
+                        </label></span> 
+                    <input type="text" class="form-control" name="userId" id="userId" 
+                           placeholder="Enter User ID" required > 
+                </div> 
+                <div class="form-group"> 
+                    <label for="userName">User Name:</label> 
+                    <input type="text" class="form-control" id="userName" 
+                           placeholder="Enter User Name" name="userName"> 
+                </div> 
+                <div class="form-group"> 
+                    <label for="userEmail">Email:</label> 
+                    <input type="email" class="form-control" id="userEmail" 
+                           placeholder="Enter User Email" name="userEmail"> 
+                </div> 
+                <input type="button" class="btn btn-primary" id="userSave" value="Save" 
+                       onclick="saveUser();"> 
+            </form> 
+        </div>
+    </body>
+    <script>
+        $("#userId").focus();
+
+        function validateAndGetFormData() {
+            var userIdVar = $("#userId").val();
+            if (userIdVar === "") {
+                alert("User ID Required Value");
+                $("#userId").focus();
+                return "";
+            }
+
+            var userNameVar = $("#userName").val();
+            if (userNameVar === "") {
+                alert("User Name is Required Value");
+                $("#userName").focus();
+                return "";
+            }
+
+            var userEmailVar = $("#userEmail").val();
+            if (userEmailVar === "") {
+                alert("User Email is Required Value");
+                $("#userEmail").focus();
+                return "";
+            }
+
+            var jsonStrObj = {
+                userId: userIdVar,
+                userName: userNameVar,
+                userEmail: userEmailVar
+            };
+            return JSON.stringify(jsonStrObj);
+        }
+        function resetForm() {
+            $("#userId").val("");
+            $("#userName").val("");
+            $("#userEmail").val("");
+            $("#userId").focus();
+        }
+
+        function saveUser() {
+
+            var jsonStr = validateAndGetFormData();
+            if (jsonStr === "") {
+                return;
+            }
+
+            var putReqStr = createPUTRequest("90936289|-31948845481082973|90945451",
+                    jsonStr, "USERS", "USER-REL");
+
+            $("#put").text(putReqStr);
+            jQuery.ajaxSetup({async: false});
+            var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                    "http://api.login2explore.com:5577", "/api/iml");
+            $("#show").text(JSON.stringify(resultObj));
+            jQuery.ajaxSetup({async: true});
+
+            resetForm();
+        }
+
+
+
+    </script>
+</html>
