@@ -1,4 +1,4 @@
-# JsonPowerDB Powerfull PowerIndeX
+# JsonPowerDB
 
 **login2explore** click to more information about JsonPowerDB  [click here](http://login2explore.com)
 
