@@ -31,8 +31,8 @@
 ![Dashboard](https://github.com/manishmk9/JPDB_CRUD/blob/main/JPDB_CRUD/assets/Index.PNG)
 
 ### Prerequisite
-_ Create developer account.
-_ Generate token for api connection.
+- Create developer account.
+- Generate token for api connection.
 
 ### Basic crud operation of JsonPowerDB 
 
