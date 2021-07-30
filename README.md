@@ -32,7 +32,7 @@
 
 ### Prerequisite
 - Create developer account.
-- Generate token for api connection.
+- Generate token for api connection in tools section left side menu bar.
 
 ### Basic crud operation of JsonPowerDB 
 
