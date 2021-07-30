@@ -11,7 +11,7 @@
 * JPDB supports and advocates for true serverless and pluggable API development.
 
 ### Benefit and features of JsonPowerDB
-  - Simplest way to store and retrieve data in ```diff --**JSON format**.
+  - Simplest way to store and retrieve data in #f03c15**JSON format**.
   - **Schemea free** - easy to maintain. 
   - **Serverless Support** - fast develoment cuts time to market.
   - **Multi-Mode** database one solution to variety of data.
