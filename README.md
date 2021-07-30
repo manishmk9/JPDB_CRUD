@@ -36,6 +36,17 @@
 
 ### Basic crud operation of JsonPowerDB 
 
+#### Insert
+![Insert](https://github.com/manishmk9/JPDB_CRUD/blob/main/JPDB_CRUD/assets/Insert.PNG)
+
+#### Get
+![Insert](https://github.com/manishmk9/JPDB_CRUD/blob/main/JPDB_CRUD/assets/Get.PNG)
+
+#### Update
+![Insert](https://github.com/manishmk9/JPDB_CRUD/blob/main/JPDB_CRUD/assets/Update.PNG)
+
+#### Delete
+![Insert](https://github.com/manishmk9/JPDB_CRUD/blob/main/JPDB_CRUD/assets/Delete.PNG)
 
 
 
