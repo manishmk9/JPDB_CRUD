@@ -27,6 +27,16 @@ and open the tuserlate in the editor.
             <span><label>Response</label></span>
             <textarea readonly id="show" rows="5" cols="155">
             </textarea>
+            <label for="cars">Choose a Operations:</label>
+
+            <select name="operation" id="ops">
+                <option value="option">Option</option>
+                <option value="getone">Get</option>
+                <option value="insert">Insert</option>
+                <option value="upate">Update</option>
+                <option value="delete">Delete</option>
+
+            </select> 
             <h2>Vertical (basic) form</h2>
             <form id="userForm" method="post"> 
                 <div class="form-group"> 
@@ -44,7 +54,10 @@ and open the tuserlate in the editor.
                     <label for="userEmail">Email:</label> 
                     <input type="email" class="form-control" id="userEmail" 
                            placeholder="Enter User Email" name="userEmail"> 
-                </div> 
+                </div>
+                <div class="form-group"> 
+                    <input type="hidden" class="form-control" id="rec_no"> 
+                </div>
                 <input type="button" class="btn btn-primary" id="userSave" value="Save" 
                        onclick="saveUser();"> 
             </form> 
@@ -54,62 +67,186 @@ and open the tuserlate in the editor.
         $("#userId").focus();
 
         function validateAndGetFormData() {
-            var userIdVar = $("#userId").val();
-            if (userIdVar === "") {
-                alert("User ID Required Value");
-                $("#userId").focus();
-                return "";
-            }
+            if ($("#ops option:selected").text() === "Get")
+            {
+                var userIdVar = $("#userId").val();
+                if (userIdVar === "") {
+                    alert("User ID Required Value");
+                    $("#userId").focus();
+                    return "";
+                } else
+                {
+                    var jsonStrObj = {
+                        userId: userIdVar};
 
-            var userNameVar = $("#userName").val();
-            if (userNameVar === "") {
-                alert("User Name is Required Value");
-                $("#userName").focus();
-                return "";
-            }
+                    return JSON.stringify(jsonStrObj);
+                }
+            } else if ($("#ops option:selected").text() === "Insert")
+            {
+                var userIdVar = $("#userId").val();
+                if (userIdVar === "") {
+                    alert("User ID Required Value");
+                    $("#userId").focus();
+                    return "";
+                }
 
-            var userEmailVar = $("#userEmail").val();
-            if (userEmailVar === "") {
-                alert("User Email is Required Value");
-                $("#userEmail").focus();
-                return "";
-            }
+                var userNameVar = $("#userName").val();
+                if (userNameVar === "") {
+                    alert("User Name is Required Value");
+                    $("#userName").focus();
+                    return "";
+                }
 
-            var jsonStrObj = {
-                userId: userIdVar,
-                userName: userNameVar,
-                userEmail: userEmailVar
-            };
-            return JSON.stringify(jsonStrObj);
+                var userEmailVar = $("#userEmail").val();
+                if (userEmailVar === "") {
+                    alert("User Email is Required Value");
+                    $("#userEmail").focus();
+                    return "";
+                }
+                var jsonStrObj = {
+                    userId: userIdVar,
+                    userName: userNameVar,
+                    userEmail: userEmailVar
+                };
+
+                return JSON.stringify(jsonStrObj);
+            } else if ($("#ops option:selected").text() === "Update")
+            {
+
+                var userNameVar = $("#userName").val();
+                if (userNameVar === "") {
+                    alert("User Name is Required Value");
+                    $("#userName").focus();
+                    return "";
+                }
+
+                var userEmailVar = $("#userEmail").val();
+                if (userEmailVar === "") {
+                    alert("User Email is Required Value");
+                    $("#userEmail").focus();
+                    return "";
+                }
+                var jsonStrObj = {
+                    userName: userNameVar,
+                    userEmail: userEmailVar
+                };
+
+                return JSON.stringify(jsonStrObj);
+            }
         }
-        function resetForm() {
+        ;
+
+        function resetForm()
+        {
             $("#userId").val("");
             $("#userName").val("");
             $("#userEmail").val("");
             $("#userId").focus();
         }
 
-        function saveUser() {
 
-            var jsonStr = validateAndGetFormData();
-            if (jsonStr === "") {
-                return;
-            }
 
-            var putReqStr = createPUTRequest("90936289|-31948845481082973|90945451",
-                    jsonStr, "USERS", "USER-REL");
-
+        function getdata(key,value)
+        {
+            var putReqStr = createGET_BY_KEYRequest('90936289|-31948845481082973|90945451',
+                    'USERS', 'USER-REL', '{"'+key+'":"' + value + '"}');
             $("#put").text(putReqStr);
             jQuery.ajaxSetup({async: false});
             var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
-                    "http://api.login2explore.com:5577", "/api/iml");
-            $("#show").text(JSON.stringify(resultObj));
-            jQuery.ajaxSetup({async: true});
+                    "http://api.login2explore.com:5577", "/api/irl ");
 
-            resetForm();
+            jQuery.ajaxSetup({async: true});
+            return resultObj;
         }
 
+        $("#userId").focusout(function () {
+            if ($("#ops option:selected").text() === "Update")
+            {
+                var result = getdata("userId",$("#userId").val());
+                var data = JSON.parse(result.data);
+                $("#rec_no").val(JSON.parse(data.rec_no));
+                var rec = data.record;
+                $("#userName").val(rec.userName);
+                $("#userEmail").val(rec.userEmail);
+            }
+        });
+        
+        
 
+        function saveUser()
+        {
+            var jsonStr = validateAndGetFormData();
+            if (jsonStr === "")
+            {
+                return;
+            }
+            if ($("#ops option:selected").text() === "Get")
+            {
+                var putReqStr = createGETRequest("90936289|-31948845481082973|90945451",
+                        "USERS", "USER-REL", jsonStr);
+                $("#put").text(putReqStr);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                        "http://api.login2explore.com:5577", "/api/irl ");
+                $("#show").text(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+                resetForm();
+            } else if ($("#ops option:selected").text() === "Insert")
+            {
+
+                var jsonStr = validateAndGetFormData();
+                if (jsonStr === "")
+                {
+                    return;
+                }
+                var putReqStr = createPUTRequest("90936289|-31948845481082973|90945451",
+                        jsonStr, "USERS", "USER-REL");
+
+                $("#put").text(putReqStr);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                        "http://api.login2explore.com:5577", "/api/iml");
+                $("#show").text(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+
+                resetForm();
+            } else if ($("#ops option:selected").text() === "Update")
+            {
+                var jsonStr = validateAndGetFormData();
+                if (jsonStr === "")
+                {
+                    return;
+                }
+                var putReqStr = createUPDATERecordRequest("90936289|-31948845481082973|90945451",
+                        jsonStr, "USERS", "USER-REL", $('#rec_no').val());
+                $("#put").text(putReqStr);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                        "http://api.login2explore.com:5577", "/api/iml");
+                $("#show").text(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+
+                resetForm();
+
+            }
+            
+            else if ($("#ops option:selected").text() === "Delete")
+            {
+            
+                var putReqStr = createREMOVERecordRequest("90936289|-31948845481082973|90945451",
+                      "USERS", "USER-REL", $('#userId').val());
+                $("#put").text(putReqStr);
+                jQuery.ajaxSetup({async: false});
+                var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                        "http://api.login2explore.com:5577", "/api/iml");
+                $("#show").text(JSON.stringify(resultObj));
+                jQuery.ajaxSetup({async: true});
+
+                resetForm();
+
+            }
+        }
+        ;
 
     </script>
 </html>
